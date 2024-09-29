@@ -1,0 +1,40 @@
+name: Deploy .NET 6 Web API
+
+on:
+  push:
+    branches:
+      - main  # Adjust based on the branch you want to use for deployment
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Copy files to the server via SSH
+      uses: appleboy/scp-action@v0.1.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "./publish/*"
+        target: "/var/www/myapp/"  # Adjust to your server directory
+
+    - name: Restart application on server
+      run: |
+        ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          sudo systemctl restart myapp  # Adjust based on your systemd service name
+        EOF
