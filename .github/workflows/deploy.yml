@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: "./publish/*"
-        target: "/var/www/myapp/"  # Adjust to your server directory
+        target: "/home/siacdevelop/Downloads/test"  # Adjust to your server directory
 
     - name: Restart application on server
       run: |
