@@ -3,7 +3,7 @@ name: Deploy .NET 6 Web API
 on:
   push:
     branches:
-      - main  # Adjust based on the branch you want to use for deployment
+      - master  # Adjust based on the branch you want to use for deployment
 
 jobs:
   build-and-deploy:
