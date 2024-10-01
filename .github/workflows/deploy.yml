@@ -41,6 +41,6 @@ jobs:
           fuser -k 5001/tcp || true  # Kill any existing app running on port 5001
           
           # Start the .NET application in the background and save the process ID
-          nohup dotnet TestAPI.dll --urls "http://10.1.7.37:5001" > output.log 2>&1 &
+          nohup dotnet TestAPI.dll --urls "http://0.0.0.0:5001" > output.log 2>&1 &
           echo $! > dotnet_app.pid  # Save the process ID for future reference
         EOF
