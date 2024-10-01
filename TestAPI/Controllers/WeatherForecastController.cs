@@ -8,7 +8,7 @@ namespace TestAPI.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "y"
+            "SS" , "WWW"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
